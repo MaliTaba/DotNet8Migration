@@ -1,0 +1,10 @@
+# Run this command to always ignore formatting commits in `git blame`
+# git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Add Git commit hash of the commit that should be ignored.
+
+# Dotnet format / Example git commit hash
+41076ad4faf5603e304dc72dac350fdfd2e4cb34
+
+# Changed everything to file level namespaces / Example git commit hash
+7e1615ff7a6852df6518bcd34f4ca9920af9e4dc
