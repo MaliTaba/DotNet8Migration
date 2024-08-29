@@ -1,5 +1,10 @@
 # DotNet8Migration
 
+## Understand project
+For the first step, analyse the project to understand the migration requirements ahead of the work.
+Identify the existing target frameworks in the solution using the following regular expression search:
+``<TargetFramework>.*</TargetFramework>``
+
 ## Upgrade all TargetFramework
 
 Upgrade all ``TargetFramework`` and ``runtime`` to .Net 8
@@ -29,6 +34,10 @@ To ensure the changes do not pollute the git blame, add a gitignore file and add
 
 .Net 8 supports [file scoped namespaces](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-10.0/file-scoped-namespaces).
 Make the changes in a separate PR and add the git commit hash to gitignore file.
+
+After making the changes locally, do this regular expression search to ensure all files are changed as expected:
+
+``^\s*namespace\s+.*[^;]\s*$``
 
 ## Step 5 - Upgrade libraries
  Upgrade libraries as much as possible. Specially those with vulnerability.
