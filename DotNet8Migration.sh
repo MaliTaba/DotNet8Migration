@@ -1,19 +1,27 @@
 #!/bin/bash
 
+# Report
+echo "Here is the list of all the TargetFramework in this project:"
+find . -name "*.csproj" -exec sed -n 's/.*<TargetFramework>\(net[^8].*\)<\/TargetFramework>.*/\1/p' {} +
+
+
+# Find all .csproj files
+find . -name "*.csproj" | while read -r file; do
+    # Use sed to replace TargetFramework entries
+    sed -i '' -E '
+        /<TargetFramework>net[^8]/,/<\/TargetFramework>/ {
+            s|<TargetFramework>net[^8][^<]*</TargetFramework>|<TargetFramework>net8.0</TargetFramework>|g
+        }
+    ' "$file"
+    
+    echo "Processed: $file"
+done
+
+echo "All done!"
+
+
 # Find all .csproj files in the current directory and subdirectories
 find "$(pwd)" -name "*.csproj" | while read -r PROJECT_FILE; do
-
-    if grep -q "<TargetFramework>net6" "$PROJECT_FILE"; then
-
-        echo "Processing: $PROJECT_FILE"
-
-        # Update TargetFramework to net8.0
-        # in Mac use ''
-        sed -i '' 's/<TargetFramework>net6\.0<\/TargetFramework>/<TargetFramework>net8.0<\/TargetFramework>/g' "$PROJECT_FILE"
-
-        echo "Updated: $PROJECT_FILE"
-        echo "------------------------"
-    fi
 
     # Find all lines containing the word "runtime"
     if grep -q "runtime" "$PROJECT_FILE"; then

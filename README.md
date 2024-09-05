@@ -19,10 +19,19 @@ Update ``--runtime=ubuntu-x64`` to ``--runtime=linux-x64``
 Until this step, we have done the very basics of migrating a service to .Net 8. The following steps would help to improve the health of the service without spending much time on it.
 
 ## Step 4 - Upgrade .net libraries 
-Using this command you can create a list of Microsoft libraries that require upgrade. I start with those that have the major version of 6.x.x.
+Using this command you can create a list of Microsoft libraries that require upgrade. 
+
+Find all the microsoft packages
+> find . -name "*.csproj" -exec grep -H '<PackageReference Include="Microsoft.*" Version="6' {} +
+
+I start with those that have the major version of 6.x.x.
+
+
 > dotnet list package --outdated | grep -i Microsoft | grep -i 6. > LibrariesToUpdate.txt
 
 >dotnet list package --outdated | grep -i Microsoft > LibrariesToUpdate.txt
+
+upgrade the Microsoft.* packages that are on v6 to v8
 
 ## Step 4 - gitignore
 Sometime we want to migrate some services that could do with major solution level changes such as formatting and removing of unused usings.  
@@ -47,3 +56,28 @@ This is a good opportunity to review the ReadMe and ensure it provides basic inf
 * the aim of the service  
 * how to run and test it locally
 * find related links such as monitoring & CI/CD
+
+## Librayr update
+
+Update Nunit to version 4+ could require legacy assertion syntaxes update, such as:
+```
+Assert.IsTrue
+Assert.True
+Assert.AreEqual
+```
+
+Following reg expressions could help with some large changes
+
+```
+Assert.IsFalse\((.*), (.*)\);   ---> Assert.That($1, Is.False, $2);
+Assert.IsFalse\((.*)\);         ---> Assert.That($1, Is.False);
+Assert.False\((.*)\);           ---> Assert.That($1, Is.False);
+Assert.IsTrue\((.*), (.*)\);    ---> Assert.That($1, Is.True, $2);
+Assert.IsTrue\((.*)\);          ---> Assert.That($1, Is.True);
+Assert.True\((.*)\);            ---> Assert.That($1, Is.True);
+Assert.IsNotNull\((.*), (.*)\); ---> Assert.That($1, Is.Not.Null, $2);
+Assert.IsNotNull\((.*)\);       ---> Assert.That($1, Is.Not.Null);
+Assert.IsNull\((.*)\);          ---> Assert.That($1, Is.Null);
+Assert.AreEqual\((.*), (.*)\);  ---> Assert.That($2, Is.EqualTo($1));
+Assert.IsEmpty\((.*)\);         ---> Assert.That($1, Is.Empty);
+Assert.IsNotEmpty\((.*)\);      ---> Assert.That($1, Is.Not.Empty);```
