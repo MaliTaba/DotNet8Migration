@@ -6,22 +6,34 @@ Large number of projects are not .net 8 and from Nov 2024 the older versions won
 
 ## Understand project
 For the first step, analyse the project to understand the migration requirements ahead of the work.
-Identify the existing target frameworks in the solution using the following regular expression search:
+Identify the existing target frameworks in the solution using the following **regular expression** search:
+
 ``<TargetFramework>.*</TargetFramework>``
 
 ## Upgrade all TargetFramework
 
-Upgrade all ``TargetFramework`` and ``runtime`` to .Net 8
+Upgrade all ``TargetFramework`` and ``runtime`` to .Net 8.
+
+The ```DotNet8Migration.sh``` script helps with this step. 
 
 ## Upgrade runtime to .Net 8 (TF)
-The ```DotNet8Migration.sh``` script helps with steps 1 and 2. 
+The ```DotNet8Migration.sh``` script helps with this step. 
+
 
 ## Update CI/CD settings to use .Net 8
 
+Run the service in CI/CD and update the CI/CD to ensure it can support .net 8.
+
+This is an example change required for some of the TeamCity configurations: 
+
 Update ``--runtime=ubuntu-x64`` to ``--runtime=linux-x64``
 
-Until this step, we have done the very basics of migrating a service to .Net 8. The following steps would help to improve the health of the service without spending much time on it.
 
+--------------
+
+## Improve The Service
+
+Until this step, we have done the very basics of migrating a service to .Net 8. The following steps would help to improve the health of the service without spending much time on it.
 ## Step 4 - Upgrade .net libraries 
 Using this command you can create a list of Microsoft libraries that require upgrade. 
 
@@ -53,35 +65,11 @@ After making the changes locally, do this regular expression search to ensure al
 ``^\s*namespace\s+.*[^;]\s*$``
 
 ## Step 5 - Upgrade libraries
- Upgrade libraries as much as possible. Specially those with vulnerability.
+ Upgrade libraries as much as possible. Specially those with vulnerability. In a separate instruction we collect some tips on library updates
 
 ## Step 7 - Update ReadMe 
 This is a good opportunity to review the ReadMe and ensure it provides basic information for a new developer to know 
 * the aim of the service  
 * how to run and test it locally
-* find related links such as monitoring & CI/CD
+* how to find related links such as monitoring & CI/CD
 
-## Librayr update
-
-Update Nunit to version 4+ could require legacy assertion syntaxes update, such as:
-```
-Assert.IsTrue
-Assert.True
-Assert.AreEqual
-```
-
-Following reg expressions could help with some large changes
-
-```
-Assert.IsFalse\((.*), (.*)\);   ---> Assert.That($1, Is.False, $2);
-Assert.IsFalse\((.*)\);         ---> Assert.That($1, Is.False);
-Assert.False\((.*)\);           ---> Assert.That($1, Is.False);
-Assert.IsTrue\((.*), (.*)\);    ---> Assert.That($1, Is.True, $2);
-Assert.IsTrue\((.*)\);          ---> Assert.That($1, Is.True);
-Assert.True\((.*)\);            ---> Assert.That($1, Is.True);
-Assert.IsNotNull\((.*), (.*)\); ---> Assert.That($1, Is.Not.Null, $2);
-Assert.IsNotNull\((.*)\);       ---> Assert.That($1, Is.Not.Null);
-Assert.IsNull\((.*)\);          ---> Assert.That($1, Is.Null);
-Assert.AreEqual\((.*), (.*)\);  ---> Assert.That($2, Is.EqualTo($1));
-Assert.IsEmpty\((.*)\);         ---> Assert.That($1, Is.Empty);
-Assert.IsNotEmpty\((.*)\);      ---> Assert.That($1, Is.Not.Empty);```

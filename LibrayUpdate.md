@@ -21,4 +21,10 @@ Assert.IsNotNull\((.*)\);       ---> Assert.That($1, Is.Not.Null);
 Assert.IsNull\((.*)\);          ---> Assert.That($1, Is.Null);
 Assert.AreEqual\((.*), (.*)\);  ---> Assert.That($2, Is.EqualTo($1));
 Assert.IsEmpty\((.*)\);         ---> Assert.That($1, Is.Empty);
-Assert.IsNotEmpty\((.*)\);      ---> Assert.That($1, Is.Not.Empty);```
+Assert.IsNotEmpty\((.*)\);      ---> Assert.That($1, Is.Not.Empty);
+```
+
+## Moq 
+Due to security risk do not use versions >4.18.4.
+
+You can also migrate the project to [NSubstitute](https://github.com/nsubstitute/NSubstitute)
