@@ -1,5 +1,9 @@
 # DotNet8Migration
 
+Large number of projects are not .net 8 and from Nov 2024 the older versions wont be supported.
+
+```org:XX path:*.csproj NOT "<TargetFramework>net8.0</TargetFramework>"```
+
 ## Understand project
 For the first step, analyse the project to understand the migration requirements ahead of the work.
 Identify the existing target frameworks in the solution using the following regular expression search:
