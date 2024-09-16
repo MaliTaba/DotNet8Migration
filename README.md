@@ -34,7 +34,7 @@ Update ``--runtime=ubuntu-x64`` to ``--runtime=linux-x64``
 ## Improve The Service
 
 Until this step, we have done the very basics of migrating a service to .Net 8. The following steps would help to improve the health of the service without spending much time on it.
-## Step 4 - Upgrade .net libraries 
+## Upgrade .net libraries 
 Using this command you can create a list of Microsoft libraries that require upgrade. 
 
 Find all the microsoft packages
@@ -49,7 +49,7 @@ I start with those that have the major version of 6.x.x.
 
 upgrade the Microsoft.* packages that are on v6 to v8
 
-## Step 4 - gitignore
+## .git-blame-ignore-revs
 Sometime we want to migrate some services that could do with major solution level changes such as formatting and removing of unused usings.  
 To do these changes, apply the changes in a seperate PR. Review the changes are as you expected. Do not trust fully on the result of commands such as ``$ dotnet format``.
 
@@ -64,10 +64,10 @@ After making the changes locally, do this regular expression search to ensure al
 
 ``^\s*namespace\s+.*[^;]\s*$``
 
-## Step 5 - Upgrade libraries
+## Upgrade libraries
  Upgrade libraries as much as possible. Specially those with vulnerability. In a separate instruction we collect some tips on library updates
 
-## Step 7 - Update ReadMe 
+## Update ReadMe 
 This is a good opportunity to review the ReadMe and ensure it provides basic information for a new developer to know 
 * the aim of the service  
 * how to run and test it locally
