@@ -57,8 +57,12 @@ To ensure the changes do not pollute the git blame, add a gitignore file and add
 
 ## File scoped namespaces
 
+Beginning with C# 10, you can declare a file scoped namespace. 
 .Net 8 supports [file scoped namespaces](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-10.0/file-scoped-namespaces).
 Make the changes in a separate PR and add the git commit hash to gitignore file.
+
+Check if a project has none file-scoped namespaces with this regular expression
+``^\s*namespace\s+[\w.]+\s*\{``
 
 After making the changes locally, do this regular expression search to ensure all files are changed as expected:
 
