@@ -68,6 +68,12 @@ After making the changes locally, do this regular expression search to ensure al
 
 ``^\s*namespace\s+.*[^;]\s*$``
 
+Include the ``csharp_style_namespace_declarations = file_scoped:warning`` change in the ".editorconfig"
+
+``# scoped file namespace``
+
+``csharp_style_namespace_declarations = file_scoped:warning``
+
 ## Upgrade libraries
  Upgrade libraries as much as possible. Specially those with vulnerability. In a separate instruction we collect some tips on library updates
 
